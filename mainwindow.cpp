@@ -30,8 +30,8 @@ void MainWindow::OpenFile()//open the file we choose
 void MainWindow::CloseFile()//close current file
 {
     textEdit->setPlainText(NULL);
-    SetCurrentFile("文本阅读器");
-    statusBar()->showMessage(tr("就绪"), 2000);
+    SetCurrentFile("TextReader");
+    statusBar()->showMessage(tr("Ready"), 2000);
 }
 
 void MainWindow::BoldTypeface()//bold the font
@@ -123,64 +123,63 @@ void MainWindow::BackGroundColor()//background color control
 void MainWindow::About()
 {
    QMessageBox::about(this, tr("About Application"),
-            tr(" <b>文本阅读器</b> 是面向对象程序设计的期末大程,由李牧、蔡旭科、李永杰三人小组完成。\n"
-               "运行环境：Win 10, Qt 5.6。"));
+            tr("Environment:Win 10, Qt 5.6"));
 }
 
 void MainWindow::CreateActions()
 {
     //file menu
-    QMenu *fileMenu = menuBar()->addMenu(tr("文件(&F)")); //add File in Menu bar;
-    QToolBar *fileToolBar = addToolBar(tr("文件"));    //add File in tool bar
+    QMenu *fileMenu = menuBar()->addMenu(tr("File(&F)")); //add File in Menu bar;
+    QToolBar *fileToolBar = addToolBar(tr("File"));    //add File in tool bar
 
     //open Icon
     const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/folder.png"));
-    openAct = new QAction(openIcon, tr("打开(&O)..."), this);
+    openAct = new QAction(openIcon, tr("Open(&O)..."), this);
     openAct->setShortcuts(QKeySequence::Open);
-    openAct->setStatusTip(tr("打开一个文本文件。"));
+    openAct->setStatusTip(tr("Open a new file"));
     connect(openAct, &QAction::triggered, this, &MainWindow::OpenFile);
     fileMenu->addAction(openAct);
     fileToolBar->addAction(openAct);
     //close Icon
     const QIcon closeIcon = QIcon::fromTheme("document-close", QIcon(":/images/close.png"));
-    closeAct = new QAction(closeIcon, tr("关闭(&C)..."), this);
+    closeAct = new QAction(closeIcon, tr("Close(&C)..."), this);
     closeAct->setShortcuts(QKeySequence::Close);
-    closeAct->setStatusTip(tr("关闭当前文件。"));
+    closeAct->setStatusTip(tr("Close current file"));
     connect(closeAct, &QAction::triggered, this, &MainWindow::close);
     fileMenu->addAction(closeAct);
     fileToolBar->addAction(closeAct);
     fileMenu->addSeparator();
     //exit Icon
     const QIcon exitIcon = QIcon::fromTheme("application-exit");
-    exitAct = fileMenu->addAction(exitIcon, tr("退出(&E)"), this, &QWidget::close);
-    exitAct->setStatusTip(tr("退出程序。"));
+    exitAct = fileMenu->addAction(exitIcon, tr("Exit(&E)"), this, &QWidget::close);
+    exitAct->setStatusTip(tr("Exit the reader"));
     exitAct->setShortcuts(QKeySequence::Quit);
 
     //format menu
-    QMenu *styleMenu = menuBar()->addMenu(tr("格式(&S)"));
-    QToolBar *styleToolBar = addToolBar(tr("格式"));
+    QMenu *styleMenu = menuBar()->addMenu(tr("Format(&S)"));
+    QToolBar *styleToolBar = addToolBar(tr("Format"));
     //bold Icon
     const QIcon boldIcon = QIcon::fromTheme("bold", QIcon(":/images/bold.png"));
-    boldAct = new QAction(boldIcon, tr("加粗(&B)"), this);
+    boldAct = new QAction(boldIcon, tr("Bold(&B)"), this);
     boldAct->setShortcuts(QKeySequence::Bold);
-    boldAct->setStatusTip(tr("文本加粗显示。"));
+    boldAct->setStatusTip(tr("Bold the Text"));
     connect(boldAct, &QAction::triggered, this, &MainWindow::BoldTypeface);
     styleMenu->addAction(boldAct);
     styleToolBar->addAction(boldAct);
     //italic Icon
     const QIcon italicIcon = QIcon::fromTheme("italic", QIcon(":/images/italic.png"));
-    italicAct = new QAction(italicIcon, tr("斜体(&I)"), this);
+    italicAct = new QAction(italicIcon, tr("Italic(&I)"), this);
     italicAct->setShortcuts(QKeySequence::Italic);
-    italicAct->setStatusTip(tr("文本斜体显示。"));
+    italicAct->setStatusTip(tr("Itaclic the text"));
     connect(italicAct, &QAction::triggered, this, &MainWindow::ItaliseTypeface);
     styleMenu->addAction(italicAct);
     styleToolBar->addAction(italicAct);
 
     //underline Icon
     const QIcon underlineIcon = QIcon::fromTheme("underline", QIcon(":/images/underline.png"));
-    underlineAct = new QAction(underlineIcon, tr("下划线(&U)"), this);
+    underlineAct = new QAction(underlineIcon, tr("underline(&U)"), this);
     underlineAct->setShortcuts(QKeySequence::Underline);
-    underlineAct->setStatusTip(tr("文本下划线显示。"));
+    underlineAct->setStatusTip(tr("underline the text"));
     connect(underlineAct, &QAction::triggered, this, &MainWindow::UnderlineTypeface);
     styleMenu->addAction(underlineAct);
     styleToolBar->addAction(underlineAct);
@@ -209,41 +208,41 @@ void MainWindow::CreateActions()
 
     QPixmap FontColorIcon(16, 16);
     FontColorIcon.fill(Qt::black);
-    fontcolorAct = styleMenu->addAction(FontColorIcon, tr("字体颜色(&F)..."), this, &MainWindow::SetFontcolor);
-    fontcolorAct->setStatusTip(tr("改变字体颜色。"));
+    fontcolorAct = styleMenu->addAction(FontColorIcon, tr("Font Color(&F)..."), this, &MainWindow::SetFontcolor);
+    fontcolorAct->setStatusTip(tr("Change the font color"));
     styleToolBar->addAction(fontcolorAct);
 
     QPixmap BgColorIcon(16, 16);
     BgColorIcon.fill(Qt::white);
-    bgcolorAct = styleMenu->addAction(BgColorIcon, tr("背景颜色(&G)..."), this, &MainWindow::BackGroundColor);
-    bgcolorAct->setStatusTip(tr("改变背景颜色。"));
+    bgcolorAct = styleMenu->addAction(BgColorIcon, tr("Background Color(&G)..."), this, &MainWindow::BackGroundColor);
+    bgcolorAct->setStatusTip(tr("Change the background color"));
     styleToolBar->addAction(bgcolorAct);
 
     //convert menu
-    QMenu *convertMenu= menuBar()->addMenu(tr("转换(&C)"));
-    QToolBar *convertToolBar = addToolBar(tr("转换"));    //add File in tool bar
+    QMenu *convertMenu= menuBar()->addMenu(tr("Convert(&C)"));
+    QToolBar *convertToolBar = addToolBar(tr("Convert"));    //add File in tool bar
 
     //transfer Icon
     const QIcon tohexIcon = QIcon::fromTheme("tohex", QIcon(":/images/Transfer.png"));
-    QAction *toHexAct = new QAction(tohexIcon,tr("十六进制(&H)"), this);
-    toHexAct->setStatusTip(tr("文本十六进制显示。"));
+    QAction *toHexAct = new QAction(tohexIcon,tr("Hex(&H)"), this);
+    toHexAct->setStatusTip(tr("Hex the file"));
     connect(toHexAct, &QAction::triggered, this, &MainWindow::HexTransfer);
     convertMenu->addAction(toHexAct);
     convertToolBar->addAction(toHexAct);
 
     //help menu
-    QMenu *helpMenu = menuBar()->addMenu(tr("帮助(&H)"));
+    QMenu *helpMenu = menuBar()->addMenu(tr("File(&H)"));
 
-    QAction *aboutAct = helpMenu->addAction(tr("关于(&A)"), this, &MainWindow::About);
-    aboutAct->setStatusTip(tr("关于 文本阅读器。"));
+    QAction *aboutAct = helpMenu->addAction(tr("About(&A)"), this, &MainWindow::About);
+    aboutAct->setStatusTip(tr("About"));
 
-    QAction *aboutQtAct = helpMenu->addAction(tr("关于&Qt"), qApp, &QApplication::aboutQt);
+    QAction *aboutQtAct = helpMenu->addAction(tr("About&Qt"), qApp, &QApplication::aboutQt);
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
 
 void MainWindow::CreateStatusBar()//create the status bar on the window
 {
-    statusBar()->showMessage(tr("就绪。"));
+    statusBar()->showMessage(tr("ready"));
 }
 
 void MainWindow::ReadSettings() //initialize settings
@@ -264,8 +263,8 @@ void MainWindow::LoadFile(const QString &file_Name)//load file
 {
     QFile file(file_Name);
     if (!file.open(QFile::ReadOnly)) {
-        QMessageBox::warning(this, tr("文本阅读器"),
-                             tr("无法读取文件 %1:\n%2.")
+        QMessageBox::warning(this, tr("Text Reader"),
+                             tr("can not read file %1:\n%2.")
                              .arg(QDir::toNativeSeparators(file_Name), file.errorString()));
         return;
     }
@@ -284,7 +283,7 @@ void MainWindow::LoadFile(const QString &file_Name)//load file
 #endif
     isHex=false;
     SetCurrentFile(file_Name);
-    statusBar()->showMessage(tr("文件已打开"), 2000);
+    statusBar()->showMessage(tr("File already Opened"), 2000);
     file.close();
 }
 
@@ -294,7 +293,7 @@ void MainWindow::SetCurrentFile(const QString &fileName)//set the Current file
 
     QString shownName = curFile;
     if (curFile.isEmpty())
-        shownName = "文本阅读器";
+        shownName = "Text Reader";
     setWindowFilePath(shownName);
 }
 
